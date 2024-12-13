@@ -76,17 +76,14 @@
 
     // Additional event listeners for tracking
     document.getElementById('test-form').addEventListener('submit', function() {
-        console.log("Test-Form submitted");
         _paq.push(['trackEvent', 'Form', 'Submit', 'Test Form']);
     });
 
     document.getElementById('btn-click-me').addEventListener('click', function() {
-        console.log("Click Me Button clicked");
         _paq.push(['trackEvent', 'Button', 'Click', 'Click Me Button']);
     });
 
     document.getElementById('btn-second').addEventListener('click', function() {
-        console.log("Second Button clicked");
         _paq.push(['trackEvent', 'Button', 'Click', 'Second Button', "Kate"]);
     });
 
