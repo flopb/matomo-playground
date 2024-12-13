@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  matomo:
+    image: matomo:latest
+    container_name: matomo
+    ports:
+      - "8080:80"  # Matomo UI accessible at http://localhost:8080
+    volumes:
+      - matomo-data:/var/www/html
+      - ./matomo/config.ini.php:/var/www/html/config/config.ini.php
+    environment:
+      - MATOMO_DATABASE_HOST=db
+      - MATOMO_DATABASE_TABLES_PREFIX=matomo_
+      - MATOMO_DATABASE_USERNAME=matomo
+      - MATOMO_DATABASE_PASSWORD=matomo_password
+      - MATOMO_DATABASE_DBNAME=matomo
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:latest
+    container_name: matomo_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=matomo
+      - MYSQL_USER=matomo
+      - MYSQL_PASSWORD=matomo_password
+    volumes:
+      - db-data:/var/lib/mysql
+
+  website:
+    image: php:apache
+    container_name: dummy_website
+    ports:
+      - "8081:80"  # Website accessible at http://localhost:8081
+    volumes:
+      - ./website:/var/www/html
+
+  cron:
+    image: matomo:latest
+    container_name: matomo_cron
+    depends_on:
+      - matomo
+      - db
+    volumes:
+      - matomo-data:/var/www/html
+      - ./matomo/config.ini.php:/var/www/html/config/config.ini.php
+    environment:
+      - MATOMO_DATABASE_HOST=db
+      - MATOMO_DATABASE_TABLES_PREFIX=matomo_
+      - MATOMO_DATABASE_USERNAME=matomo
+      - MATOMO_DATABASE_PASSWORD=matomo_password
+      - MATOMO_DATABASE_DBNAME=matomo
+    entrypoint: ["/bin/sh", "-c", "while true; do php /var/www/html/console core:archive --url=http://localhost:8080 > /proc/1/fd/1 2>/proc/1/fd/2; sleep 60; done"]
+
+volumes:
+  matomo-data:
+  db-data:

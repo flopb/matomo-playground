@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Dummy Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        header, section, footer {
+            margin-bottom: 20px;
+        }
+        .button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container {
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to the Dummy Website</h1>
+    <p>Explore various elements and test Matomo tracking!</p>
+</header>
+
+<section>
+    <h2>Form Section</h2>
+    <form id="test-form" class="form-container" onsubmit="return false;">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+
+        <button type="submit" class="button">Submit</button>
+    </form>
+</section>
+
+<section>
+    <h2>Interactive Buttons</h2>
+    <button class="button" id="btn-click-me">Click Me!</button>
+    <button class="button" id="btn-second">Another Button</button>
+</section>
+
+<section>
+    <h2>Scroll Tracking</h2>
+    <p>Scroll down to track scroll depth.</p>
+    <div style="height: 1500px; background: linear-gradient(white, lightgray);"></div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Dummy Website</p>
+</footer>
+
+<!-- Matomo Tag Manager -->
+<script>
+    var _mtm = window._mtm = window._mtm || [];
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+    (function() {
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src='http://localhost:8080/js/container_hKiY8Gyx.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<!-- End Matomo Tag Manager -->
+
+</body>
+</html>

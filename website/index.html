@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Dummy Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        header, section, footer {
+            margin-bottom: 20px;
+        }
+        .button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container {
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to the Dummy Website</h1>
+    <p>Explore various elements and test Matomo tracking!</p>
+</header>
+
+<section>
+    <h2>Form Section</h2>
+    <form id="test-form" class="form-container">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+
+        <button type="submit" class="button">Submit</button>
+    </form>
+</section>
+
+<section>
+    <h2>Interactive Buttons</h2>
+    <button class="button" id="btn-click-me">Click Me!</button>
+    <button class="button" id="btn-second">Another Button</button>
+</section>
+
+<section>
+    <h2>Scroll Tracking</h2>
+    <p>Scroll down to track scroll depth.</p>
+    <div style="height: 1500px; background: linear-gradient(white, lightgray);"></div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Dummy Website</p>
+</footer>
+
+<!-- Matomo Tracking Code -->
+<!-- Matomo -->
+<script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//localhost:8080/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+
+    // Additional event listeners for tracking
+    document.getElementById('test-form').addEventListener('submit', function() {
+        console.log("Test-Form submitted");
+        _paq.push(['trackEvent', 'Form', 'Submit', 'Test Form']);
+    });
+
+    document.getElementById('btn-click-me').addEventListener('click', function() {
+        console.log("Click Me Button clicked");
+        _paq.push(['trackEvent', 'Button', 'Click', 'Click Me Button']);
+    });
+
+    document.getElementById('btn-second').addEventListener('click', function() {
+        console.log("Second Button clicked");
+        _paq.push(['trackEvent', 'Button', 'Click', 'Second Button', "Kate"]);
+    });
+
+    // Scroll tracking
+    document.addEventListener('scroll', function() {
+        console.log("Scrolling");
+        var scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        // Modulo scroll depth to 10
+        _paq.push(['trackEvent', 'Scroll', 'Depth', Math.round(scrollDepth / 10) * 10, scrollDepth]);
+    });
+</script>
+<!-- End Matomo Code -->
+
+</body>
+</html>
